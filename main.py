@@ -1,11 +1,5 @@
-from OwnerList import OwnerList
+from MainWindow import MainWindow
 
 
-owners = (
-    (25, 38),
-    (25, 41),
-)
-
-owners = OwnerList(owners)
-for owner in owners:
-    print(owner)
+if __name__ == '__main__':
+    window = MainWindow()

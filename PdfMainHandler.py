@@ -1,7 +1,6 @@
 from pypdf import PdfWriter
 from tkinter import filedialog as fd, ttk, Tk, Label, Button
 
-from tkcalendar import DateEntry
 
 from Owner import Owner
 
@@ -11,8 +10,8 @@ class PdfMainHandler:
     '''объект пдф листа и логика работы с ним'''
 
     def __init__(self):
+        pass
 
-        self.select_date()
 
 
     def select_date(self):
