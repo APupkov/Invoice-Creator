@@ -19,16 +19,16 @@ class MainWindow:
         # Добавление фрейма выбора места сохранения
         savedir_frame = self.create_frame_choose_savedir()
         savedir_frame.pack(side=TOP, fill=X, pady=5)
+        # Добавление фрейма выбора месяца и года
+        date_frame = self.create_frame_date()
+        date_frame.pack(anchor=NW, pady=5)
 
         self.window.mainloop()
 
     def create_frame_choose_general_pdf(self):
         '''Создание фрейма выбора общего файла с квитанциями'''
 
-        frame = ttk.Frame(borderwidth=4, relief=SOLID, padding=[8, 10])
-        # добавляем на фрейм метку
-        label = ttk.Label(frame, text='Файл с квитанциями')
-        label.pack(anchor=N)
+        frame = self.create_frame('Файл с квитанциями')
         # добавляем на фрейм текстовое поле
         self.label_gen_pdf = ttk.Label(frame, padding=[2, 2])
         self.label_gen_pdf.pack(anchor=NW)
@@ -46,10 +46,7 @@ class MainWindow:
     def create_frame_choose_savedir(self):
         '''Создание фрейма выбора места сохранения индивидуальных квитанций'''
 
-        frame = ttk.Frame(borderwidth=4, relief=SOLID, padding=[8, 10])
-        # добавляем на фрейм метку
-        label = ttk.Label(frame, text='Место сохранения')
-        label.pack(anchor=N)
+        frame = self.create_frame('Место сохранения')
         # добавляем на фрейм текстовое поле
         self.label_savedir = ttk.Label(frame, padding=[2, 2])
         self.label_savedir.pack(anchor=NW)
@@ -62,3 +59,36 @@ class MainWindow:
     def btn_command_savedir(self) -> None:
         self.pdf.select_savedir()
         self.label_savedir['text'] = self.pdf.savedir
+
+    def create_frame(self, title: str) -> ttk.Frame:
+        '''Create base frame with title'''
+
+        frame = ttk.Frame(borderwidth=4, relief=SOLID, padding=[8, 10])
+        # добавляем на фрейм метку
+        label = ttk.Label(frame, text=title)
+        label.pack(anchor=N)
+
+        return frame
+
+    def create_frame_date(self) -> ttk.Frame:
+        '''create frame choose mouth and year'''
+
+        frame = self.create_frame('Выбор месяца и года')
+
+        # Комбо-бокс для выбора месяца
+        months = list(range(1, 13))
+        label_month = Label(frame, text="Месяц:", font=("Arial", 12))
+        label_month.grid(column=0, row=0, padx=10, pady=10)
+        combo_month = ttk.Combobox(frame, values=months, state="readonly")
+        combo_month.current(0)  # Устанавливаем первый элемент по умолчанию
+        combo_month.grid(column=1, row=0, padx=10, pady=10)
+
+        # Комбо-бокс для выбора года
+        years = list(range(2023, 2030))
+        label_year = Label(frame, text="Год:", font=("Arial", 12))
+        label_year.grid(column=0, row=1, padx=10, pady=10)
+        combo_year = ttk.Combobox(frame, values=years, state="readonly")
+        combo_year.current(3)  # По центру списка выбираем средний год
+        combo_year.grid(column=1, row=1, padx=10, pady=10)
+
+        return frame
