@@ -78,17 +78,17 @@ class MainWindow:
         # Комбо-бокс для выбора месяца
         months = list(range(1, 13))
         label_month = Label(frame, text="Месяц:", font=("Arial", 12))
-        label_month.grid(column=0, row=0, padx=10, pady=10)
+        label_month.pack(anchor=NW)
         combo_month = ttk.Combobox(frame, values=months, state="readonly")
         combo_month.current(0)  # Устанавливаем первый элемент по умолчанию
-        combo_month.grid(column=1, row=0, padx=10, pady=10)
+        combo_month.pack(anchor=NW)
 
         # Комбо-бокс для выбора года
         years = list(range(2023, 2030))
         label_year = Label(frame, text="Год:", font=("Arial", 12))
-        label_year.grid(column=0, row=1, padx=10, pady=10)
+        label_year.pack(anchor=NW)
         combo_year = ttk.Combobox(frame, values=years, state="readonly")
         combo_year.current(3)  # По центру списка выбираем средний год
-        combo_year.grid(column=1, row=1, padx=10, pady=10)
+        combo_year.pack(anchor=NW)
 
         return frame
