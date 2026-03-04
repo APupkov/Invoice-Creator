@@ -3,7 +3,7 @@ class Owner:
     Класс собственника помещения
     '''
 
-    def __init__(self, house: int, room: int, email=None):
+    def __init__(self, house: int, room: int | str, email=None):
         self.house = house
         self.room = room
         self.email = email

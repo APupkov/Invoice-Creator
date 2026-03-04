@@ -23,6 +23,10 @@ class MainWindow:
         date_frame = self.create_frame_date()
         date_frame.pack(anchor=NW, pady=5)
 
+        # Лайбл сообщений о работе программы
+        self.label_message = ttk.Label(self.window, padding=[2, 2], font=['Arial', 12])
+        self.label_message.pack(anchor=NW)
+
         self.window.mainloop()
 
     def create_frame_choose_general_pdf(self):
@@ -80,6 +84,9 @@ class MainWindow:
         def combo_year_selected(event):
             self.pdf.year = combo_year.get()
 
+        def command_create_invoices():
+            self.label_message['text'] = self.pdf.create_invoices()
+
         frame = self.create_frame('Выбор месяца и года')
         frame = ttk.Frame(borderwidth=4, relief=SOLID, padding=[8, 10])
         # добавляем на фрейм метку
@@ -104,7 +111,8 @@ class MainWindow:
         combo_year.current(0)  # По центру списка выбираем средний год
         combo_year.grid(row=2, column=1, padx=(50, 90))
 
-        btn_create_invoice = ttk.Button(frame, text='Сформировать квитанции', command=self.pdf.create_invoices)
+        # Кнопки запуска выполнения
+        btn_create_invoice = ttk.Button(frame, text='Сформировать квитанции', command=command_create_invoices)
         btn_create_invoice.grid(row=3, column=3)
 
         return frame
