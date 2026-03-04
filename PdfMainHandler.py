@@ -1,9 +1,12 @@
+import os
+
 from pypdf import PdfWriter
 from tkinter import filedialog as fd
 
 from OwnerList import OwnerList
 from Owner import Owner
 from owners_tuple import owners_tuple
+from number_page import rooms25, rooms29
 
 
 class PdfMainHandler:
@@ -48,14 +51,29 @@ class PdfMainHandler:
 
             return None
 
-        def create_invoice(ow: Owner) -> None:
-            """Создание квитанции"""
-
+        def forming_date_for_name():
             date = f'{self.month}{self.year}'
             if len(date) == 3:
                 date = '0' + date
+
+            return date
+
+        def create_invoice(ow: Owner) -> None:
+            """Создание квитанции"""
+
+            date = forming_date_for_name()
             name_invoice = f'{ow.room}-{ow.house} {date}.pdf'
-            print(name_invoice)
+
+            pages_dict = rooms25 if ow.house == 25 else rooms29
+            if isinstance(ow.room, int | str):
+                pages = [pages_dict[ow.room] - 1, ]
+            else:
+                pages = [pages_dict[i] - 1 for i in ow.room]
+
+            invoice = PdfWriter()
+            invoice.append(fileobj=self.general_pdf, pages=pages)
+
+            invoice.write(f'{self.savedir}/{name_invoice}')
 
         result_checking = Check_ready_for_begin()
         if result_checking:
@@ -67,6 +85,9 @@ class PdfMainHandler:
         # формирование квитанций
         for owner in owners:
             create_invoice(owner)
+
+        # subprocess.run(["explorer", self.savedir])
+        os.startfile(self.savedir)
 
         # Сообщение о успешном завершении операции
         return 'Квитанции успешно сформированы'
