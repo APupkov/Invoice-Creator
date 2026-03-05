@@ -20,7 +20,7 @@ class MainWindow:
         savedir_frame = self.create_frame_choose_savedir()
         savedir_frame.pack(side=TOP, fill=X, pady=5)
         # Добавление фрейма выбора месяца и года
-        date_frame = self.create_frame_date()
+        date_frame = self.create_frame_date_and_start()
         date_frame.pack(anchor=NW, pady=5)
 
         # Лайбл сообщений о работе программы
@@ -75,8 +75,8 @@ class MainWindow:
 
         return frame
 
-    def create_frame_date(self) -> ttk.Frame:
-        '''create frame choose month and year'''
+    def create_frame_date_and_start(self) -> ttk.Frame:
+        '''create frame choose month and year and start module'''
 
         def combo_month_selected(event):
             self.pdf.month = combo_month.get()
@@ -87,7 +87,7 @@ class MainWindow:
         def command_create_invoices():
             self.label_message['text'] = self.pdf.create_invoices()
 
-        frame = self.create_frame('Выбор месяца и года')
+        frame = self.create_frame('Параметры формирования')
         frame = ttk.Frame(borderwidth=4, relief=SOLID, padding=[8, 10])
         # добавляем на фрейм метку
         label = ttk.Label(frame, text='Выбор месяца и года')
@@ -108,8 +108,17 @@ class MainWindow:
         label_year.grid(row=1, column=1)
         combo_year = ttk.Combobox(frame, values=years, state="readonly")
         combo_year.bind("<<ComboboxSelected>>", combo_year_selected)
-        combo_year.current(0)  # По центру списка выбираем средний год
+        combo_year.current(0)
         combo_year.grid(row=2, column=1, padx=(50, 90))
+
+        # Комбо-бокс для выбора пакета квитанций
+        variants = ['', 'Стандартный набор', 'Выбрать квитанции']
+        label_kit = Label(frame, text="Что сформировать:")
+        label_kit.grid(row=1, column=3)
+        combo_kit = ttk.Combobox(frame, values=variants, state="readonly")
+        combo_kit.bind("<<ComboboxSelected>>", combo_year_selected)
+        combo_kit.current(0)
+        combo_kit.grid(row=2, column=3)
 
         # Кнопки запуска выполнения
         btn_create_invoice = ttk.Button(frame, text='Сформировать квитанции', command=command_create_invoices)

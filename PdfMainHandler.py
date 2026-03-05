@@ -5,7 +5,7 @@ from tkinter import filedialog as fd
 
 from OwnerList import OwnerList
 from Owner import Owner
-from owners_tuple import owners_tuple
+# from owners_tuple import owners_tuple
 from number_page import rooms25, rooms29
 
 
@@ -17,6 +17,7 @@ class PdfMainHandler:
         self.savedir = None
         self.month = None
         self.year = None
+        self.owners_tuple = ( )
 
     def select_general_pdf(self):
         while True:
